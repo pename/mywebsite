@@ -22,7 +22,7 @@ return [
     |
     | This value determines the "environment" your application is currently
     | running in. This may determine how you prefer to configure various
-    | services the application utilizes. Set this in your ".env" file.
+    | services your application utilizes. Set this in your ".env" file.
     |
     */
 
@@ -39,7 +39,42 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', false),
+    
+    'debug_blacklist' => [
+        '_ENV' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+            'WECHAT_TOKEN',
+            'WECHAT_OFFICIAL_ACCOUNT_TOKEN',
+            'WECHAT_APPID',
+            'WECHAT_OFFICIAL_ACCOUNT_APPID',
+            'WECHAT_SECRET',
+            'WECHAT_OFFICIAL_ACCOUNT_SECRET',
+            'WECHAT_AES_KEY',
+            'WECHAT_OFFICIAL_ACCOUNT_AES_KEY',
+        ],
+ 
+        '_SERVER' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+            'WECHAT_TOKEN',
+            'WECHAT_OFFICIAL_ACCOUNT_TOKEN',
+            'WECHAT_APPID',
+            'WECHAT_OFFICIAL_ACCOUNT_APPID',
+            'WECHAT_SECRET',
+            'WECHAT_OFFICIAL_ACCOUNT_SECRET',
+            'WECHAT_AES_KEY',
+            'WECHAT_OFFICIAL_ACCOUNT_AES_KEY',
+            'DOCUMENT_ROOT',
+            'CONTEXT_DOCUMENT_ROOT',
+            
+        ],
+ 
+        '_POST' => [
+            'password',
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -53,8 +88,6 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
-
-    'asset_url' => env('ASSET_URL', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -97,19 +130,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Faker Locale
-    |--------------------------------------------------------------------------
-    |
-    | This locale will be used by the Faker PHP library when generating fake
-    | data for your database seeds. For example, this will be used to get
-    | localized telephone numbers, street address information and more.
-    |
-    */
-
-    'faker_locale' => 'en_US',
-
-    /*
-    |--------------------------------------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
     |
@@ -122,6 +142,23 @@ return [
     'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Logging Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure the log settings for your application. Out of
+    | the box, Laravel uses the Monolog PHP logging library. This gives
+    | you a variety of powerful log handlers / formatters to utilize.
+    |
+    | Available Settings: "single", "daily", "syslog", "errorlog"
+    |
+    */
+
+    'log' => env('APP_LOG', 'single'),
+
+    'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
     /*
     |--------------------------------------------------------------------------
@@ -174,6 +211,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Overtrue\LaravelWeChat\ServiceProvider::class,
 
     ],
 
@@ -191,7 +229,6 @@ return [
     'aliases' => [
 
         'App' => Illuminate\Support\Facades\App::class,
-        'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
         'Blade' => Illuminate\Support\Facades\Blade::class,
@@ -221,10 +258,10 @@ return [
         'Schema' => Illuminate\Support\Facades\Schema::class,
         'Session' => Illuminate\Support\Facades\Session::class,
         'Storage' => Illuminate\Support\Facades\Storage::class,
-        'Str' => Illuminate\Support\Str::class,
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'EasyWeChat' => Overtrue\LaravelWeChat\Facade::class,
 
     ],
 
